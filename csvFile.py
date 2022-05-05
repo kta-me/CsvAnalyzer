@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import tkinter as tk
 from tkinter import filedialog as fd
 
 def get_file():
@@ -13,17 +14,17 @@ def print_filename(file_name_label):
     return file_name
 
 def read(file_name, rows_count_label, columns_count_label):
-    df = pd.read_csv(file_name, header = None, sep = ';')
-    rows_count = df.shape[0]
-    column_count = df.shape[1]
+    file = pd.read_csv(file_name, sep = ';', header = None)
+    rows_count = file.shape[0]
+    column_count = file.shape[1]
     rows_count_label['text'] = rows_count
     columns_count_label['text'] = column_count
+    return file
 
-# Выборка столбца в список
-def get_column(df, column_ix):
-    rows_count = df.shape[0]
+def get_column(file, column_position):
     output = []
-    for i in range(rows_count):
-        output.append(df.iat[i, column_ix])
+    rows_count = file.shape[0]
+    cols_count = file.shape[1]
+    for row in range(rows_count):
+        output.append(file.iat[row, column_position])
     return output
-
